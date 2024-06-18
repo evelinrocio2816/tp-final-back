@@ -1,0 +1,41 @@
+<h1>Carrito de Compras</h1>
+
+<div class="container">
+    {{#each products}}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Producto: {{this.product.title}}</h5>
+            <img src={{this.product.image}}>
+            <p class="card-text">Cantidad: {{this.quantity}}</p>
+            <p class="card-text">Precio: ${{this.product.totalPrice}}</p>
+            <button class="btnCart" onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')">Eliminar</button>
+        </div>
+    </div>
+    {{/each}}
+    
+</div>
+<div class="containerCompras">
+<button class="btnCart" onclick="emptyCart('{{this.cartId}}')">Vaciar Carrito</button>
+<h3 >Total de la compra: ${{totalPurchase}}</h3>
+<form method="post" action="/api/carts/{{cartId}}/purchase">
+    <button  type="submit" class="btn btn-success">Finalizar Compra</button>
+</form>
+
+
+</div>
+
+</div>
+ <form id="checkout-form">
+    <label for="title">Título del Producto:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+    <label for="price">Precio:</label>
+    <input type="number" id="price" name="price" required>
+    <br>
+    <button type="submit">Pagar</button>
+  </form>
+  <div id="payment-button"></div>
+
+      <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script src="/js/checkout.js"></script>
+ <script src="/js/cart.js"></script>

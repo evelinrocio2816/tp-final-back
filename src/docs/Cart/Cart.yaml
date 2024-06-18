@@ -1,0 +1,224 @@
+paths:
+  /api/carts:
+    post:
+      summary: Crear un nuevo Carrito de compras
+      tags:
+        - cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Carrito de compras creado exitosamente
+        '401':
+          description: No autorizado
+        '500':
+          description: Error interno del servidor
+  /api/carts/{cid}:
+    get:
+      summary: Obtener productos de un Carrito
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del Carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Productos del Carrito obtenidos exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carts'
+        '401':
+          description: No autorizado
+        '404':
+          description: Carrito no encontrado
+        '500':
+          description: Error interno del servidor
+    put:
+      summary: Actualizar un carrito por ID
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del carrito a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/carts'
+      responses:
+        '200':
+          description: Carrito actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carts'
+        '400':
+          description: Petición incorrecta
+        '404':
+          description: Carrito no encontrado
+        '500':
+          description: Error interno del servidor
+    delete:
+      summary: Eliminar un carrito por ID
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del carrito a eliminar
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Carrito eliminado exitosamente
+        '404':
+          description: Carrito no encontrado
+        '500':
+          description: Error interno del servidor
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agregar un producto al Carrito
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del Carrito
+          schema:
+            type: string
+        - in: path
+          name: pid
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto agregado al Carrito exitosamente
+        '401':
+          description: No autorizado
+        '404':
+          description: Carrito o producto no encontrado
+        '500':
+          description: Error interno del servidor
+    delete:
+      summary: Eliminar un producto del Carrito
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del Carrito
+          schema:
+            type: string
+        - in: path
+          name: pid
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto eliminado del Carrito exitosamente
+        '401':
+          description: No autorizado
+        '404':
+          description: Carrito o producto no encontrado
+        '500':
+          description: Error interno del servidor
+    put:
+      summary: Actualizar cantidad de productos en el Carrito
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del Carrito
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    description: ID del producto
+                  quantity:
+                    type: integer
+                    description: Cantidad del producto en el Carrito
+      responses:
+        '200':
+          description: Cantidad de productos en el Carrito actualizada exitosamente
+        '401':
+          description: No autorizado
+        '404':
+          description: Carrito no encontrado
+        '500':
+          description: Error interno del servidor
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Finalizar compra del Carrito
+      tags:
+        - cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del Carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Compra finalizada exitosamente
+        '401':
+          description: No autorizado
+        '404':
+          description: Carrito no encontrado
+        '500':
+          description: Error interno del servidor
+
+components:
+  schemas:
+    carts:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID único del carrito.
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto.
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito.
+      required:
+        - _id
+        - products
