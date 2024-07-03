@@ -66,35 +66,32 @@ class ProductController {
     }
 
     async deleteProduct(req, res) {
-        const id = req.params.pid;
+        
+        const productId = typeof req === "string" ? req : req.params.pid;
         try {
             logger.info("Eliminando producto con ID:", id);
             
             // Obtener detalles del producto para verificar el usuario propietario
-            const product = await productRepository.getProductsById(id);
+            const product = await productRepository.getProductsById(productId);
             if (!product) {
                 return res.status(404).json({ error: "Producto no encontrado" });
             }
     
             // Verificar si el propietario es un usuario premium
-            const owner = await userRepository.getUserById(product.owner);
-            if (owner && owner.isPremium) {
+            const ownerEmail = product.owner; 
+            const owner = await UserModel.findOne({ email: ownerEmail }); 
+            if (owner && owner.role=== "premium") {
+
                 // Enviar correo electrónico al usuario premium
-                const emailManager = new EmailManager();
-                try {
-                    await emailManager.sendProductDeletionEmail(owner.email, owner.name, id);
+                    await emailManager.sendProductDeletionEmail(owner.email, owner.first_name, productId);
                     logger.info(`Correo enviado a ${owner.email}`);
-                } catch (emailError) {
-                    logger.error('Error enviando correo:', emailError);
                 }
-            }
+            
     
-            let answer = await productRepository.deleteProduct(id);
+            let answer = await productRepository.deleteProduct(productId);
             logger.info("Producto eliminado exitosamente:", answer);
-            res.json(answer);
         } catch (error) {
             logger.error("Error al eliminar el producto:", error);
-            res.status(500).json({ error: "Error interno del servidor al eliminar el producto" });
         }
     }
     

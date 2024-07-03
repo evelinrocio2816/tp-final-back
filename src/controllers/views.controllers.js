@@ -198,7 +198,8 @@ async renderProductDetails(req, res) {
     async renderAdmin(req, res) {
       try {
         const users = await userRepository.getAllUsers(); // Obtener los usuarios desde el repositorio
-        res.render('admin', { users }); // Renderizar la vista 'admin' con los usuarios
+        const usersJSON = users.map(user => user.toJSON()) //Convertir los usuarios a JSON para evadir las restricciones impuestas por Handlebars de acceso a propiedades de usuario
+        res.render('admin', { usersJSON }); // Renderizar la vista 'admin' con los usuarios
         console.log(users);
       } catch (error) {
         logger.error(error);

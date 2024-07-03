@@ -3,6 +3,8 @@ const ProductRepository = require("../repositories/product.repository.js");
 const productRepository = new ProductRepository(); 
 const MessageModel = require("../models/message.models.js");
 const logger = require("../utils/loggers.js");
+const ProductControllers = require("../controllers/product.controllers.js")
+const productControllers = new ProductControllers()
 
 class SocketManager {
     constructor(httpServer) {
@@ -17,7 +19,7 @@ class SocketManager {
             socket.emit("products", await productRepository.getProducts() );
 
             socket.on("deleteProduct", async (id) => {
-                await productRepository.deleteProduct(id);
+                await productControllers.deleteProduct(id);
                 this.emitUpdatedProducts(socket);
             });
 

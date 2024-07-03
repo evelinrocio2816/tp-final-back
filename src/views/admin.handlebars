@@ -1,25 +1,20 @@
   <h1>Admin Panel</h1>
     
     <h2>User List</h2>
-    <ul>
-        {{#each users}}
-            <li>
-                Name: {{this.first_name}} {{this.last_name}} | 
-                Email: {{this.email}} | 
+    <ul class="cartUser">
+        {{#each usersJSON}}
+        <li>
+                Name: {{this.first_name}} {{this.last_name}} | <br>
+                Email: {{this.email}} | <br>
                 Role: {{this.role}}
-                <form action="/admin/users/{{this._id}}/edit" method="GET">
+                <form action="api/user/admin/users/{{this._id}}/edit" method="POST" ></form>
                     <button type="submit">Edit</button>
                 </form>
-                <form action="/admin/users/{{this._id}}/delete" method="POST">
+                <form action="/api/user/admin/users/{{this._id}}/edit" method="POST">
                     <button type="submit">Delete</button>
                 </form>
-            </li>
+            
+           </li>
         {{/each}}
     </ul>
     
-    <h2>Edit User</h2>
-    <form action="/admin/users/{{user._id}}/edit" method="POST">
-        <label for="role">Role:</label>
-        <input type="text" id="role" name="role" value="{{user.role}}">
-        <button type="submit">Save</button>
-    </form>

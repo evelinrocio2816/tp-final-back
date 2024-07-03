@@ -593,3 +593,53 @@ h3 {
     align-items: center;
   }
 }
+/*ADMIN*/
+
+.cartUser {
+  list-style-type: none;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-left: 10%;
+  padding: 10px;
+  max-width: 600px;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.cartUser li {
+  background-color: #fff;
+  margin: 30px ;
+  padding: 20px;
+  border-radius: 8px;
+  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.cartUser li div {
+  flex-grow: 1;
+}
+.cartUser li div p {
+  margin: 0;
+}
+.cartUser button {
+  background-color: #c863d5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.cartUser button:hover {
+  background-color: #8b4788;
+}
+.cartUser button.delete {
+  background-color: #dc3545;
+}
+.cartUser button.delete:hover {
+  background-color: #c82333;
+}

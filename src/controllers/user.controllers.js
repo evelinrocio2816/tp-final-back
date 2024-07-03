@@ -281,7 +281,7 @@ class UserController {
   async cleanInactiveUsers(req, res) {
     try {
       // Tiempo límite de inactividad (3 minutos para pruebas, 2 días para producción)
-      const inactiveTimeLimit = moment().subtract(1, "minutes"); // Para pruebas
+      const inactiveTimeLimit = moment().subtract(30, "minutes"); // Para pruebas
       // const inactiveTimeLimit = moment().subtract(2, 'days'); // Para producción
 
       // Encontrar usuarios inactivos
@@ -292,7 +292,7 @@ class UserController {
 
       if (inactiveUsers.length === 0) {
         logger.info("No se encontraron usuarios inactivos.");
-        if (res) res.status(200).send("No se encontraron usuarios inactivos.");
+        if (res) 
         return;
       }
       // Eliminar usuarios inactivos
@@ -302,20 +302,12 @@ class UserController {
 
       // Enviar correos electrónicos
       inactiveEmails.forEach(async (email) => {
-        await emailManager.sendEmail({
-          to: email,
-          subject: "Cuenta eliminada por inactividad",
-          text: "Tu cuenta ha sido eliminada por inactividad. Si crees que esto es un error, por favor, contacta con soporte.",
-        });
+        await emailManager.sendEmail({to: email});
       });
 
       logger.info(`Usuarios inactivos eliminados: ${inactiveUsers.length}`);
-      res
-        .status(200)
-        .send(`Usuarios inactivos eliminados: ${inactiveUsers.length}`);
     } catch (error) {
       logger.error("Error eliminando usuarios inactivos:", error);
-      res.status(500).send("Error interno del servidor");
     }
   }
 
