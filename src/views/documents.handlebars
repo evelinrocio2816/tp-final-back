@@ -14,4 +14,22 @@
     <button type="submit">Enviar Documentos</button>
 </form>
  
- 
+  <script>
+        document.getElementById('vendorForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el envío del formulario
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡Estás a punto de enviar tus documentos!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, enviar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit(); // Envía el formulario si el usuario confirma
+                }
+            });
+        });
+    </script>

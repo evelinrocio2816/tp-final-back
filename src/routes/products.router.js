@@ -7,7 +7,7 @@ router.get("/", productController.getProducts);
 router.get("/:pid", productController.getProductsById);
 router.post("/", productController.addProduct);
 router.put("/:pid", productController.updateProduct);
-router.delete("/:pid", productController.deleteProduct);
+router.delete("/products/:pid", productController.deleteProduct);
 
 // Ruta para obtener los detalles del producto
 router.get('/products/:pid', productController.getProductDetails);

@@ -41,8 +41,8 @@ const renderProducts = (products) => {
     })
 }
 
-const deleteProduct = (id) =>  {
-    socket.emit("deleteProduct", id);
+const deleteProduct = (productId) =>  {
+    socket.emit("deleteProduct", productId);
 }
 
 //Agregamos productos del formulario: 

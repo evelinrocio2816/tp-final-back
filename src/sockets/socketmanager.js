@@ -18,8 +18,8 @@ class SocketManager {
             
             socket.emit("products", await productRepository.getProducts() );
 
-            socket.on("deleteProduct", async (id) => {
-                await productControllers.deleteProduct(id);
+            socket.on("deleteProduct", async (productiId) => {
+                await productControllers.deleteProduct(productiId);
                 this.emitUpdatedProducts(socket);
             });
 

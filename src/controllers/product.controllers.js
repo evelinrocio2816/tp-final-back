@@ -2,7 +2,7 @@ const ProductRepository = require("../repositories/product.repository");
 const productRepository = new ProductRepository();
 const logger =require("../utils/loggers.js") 
 const EmailManager = require("../services/email.js");
-
+const UserModel=require("../models/user.models.js")
 const emailManager = new EmailManager();
 class ProductController {
 
@@ -69,7 +69,7 @@ class ProductController {
         
         const productId = typeof req === "string" ? req : req.params.pid;
         try {
-            logger.info("Eliminando producto con ID:", id);
+            logger.info("Eliminando producto con ID:", productId);
             
             // Obtener detalles del producto para verificar el usuario propietario
             const product = await productRepository.getProductsById(productId);

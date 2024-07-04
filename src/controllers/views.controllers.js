@@ -128,6 +128,7 @@ async renderProductDetails(req, res) {
 
     async renderRealTimeProducts(req, res) {
       const user = req.user; 
+      const { page = 1, limit = 4 } = req.query;
         try {
           logger.info("Renderizando vista de productos en tiempo real");
             res.render("realtimeproducts",  {role: user.role, email: user.email});
