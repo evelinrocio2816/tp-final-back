@@ -281,8 +281,8 @@ class UserController {
   async cleanInactiveUsers(req, res) {
     try {
       // Tiempo límite de inactividad (3 minutos para pruebas, 2 días para producción)
-      const inactiveTimeLimit = moment().subtract(30, "minutes"); // Para pruebas
-      // const inactiveTimeLimit = moment().subtract(2, 'days'); // Para producción
+      //const inactiveTimeLimit = moment().subtract(30, "minutes"); // Para pruebas
+       const inactiveTimeLimit = moment().subtract(2, 'days'); // Para producción
 
       // Encontrar usuarios inactivos
       const inactiveUsers = await UserModel.find({
@@ -323,40 +323,45 @@ class UserController {
   }
 
   async editUser(req, res) {
-    const { _id } = req.params;
-    const { role } = req.body;
-    try {
-      const updatedUser = await userRepository.updateUserRole(
-        _id,
-        { role },
-        { new: true }
-      );
-      if (!updatedUser) {
-        return res.status(404).json({ message: "Usuario no encontrado" });
-      }
-      res.redirect("/admin/users"); // Redirige a la lista de usuarios después de editar
-    } catch (error) {
-      logger.error(error);
-      res.status(500).send("Error interno del servidor");
+  const { _id } = req.params;
+  const { role } = req.body;
+  
+  try {
+    const updatedUser = await userRepository.updateUserRole(
+      _id,
+      { role },
+      { new: true }
+    );
+    
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
+    
+    res.redirect("/admin/users"); // Redirige a la lista de usuarios después de editar
+  } catch (error) {
+    logger.error(error);
+    res.status(500).send("Error interno del servidor");
   }
+}
+
 
   async deleteUser(req, res) {
-    const { _id } = req.params;
+  const { _id } = req.params;
 
-    try {
-      const deletedUser = await userRepository.deleteUserById(_id);
+  try {
+    const deletedUser = await userRepository.deleteUserById(_id);
 
-      if (!deletedUser) {
-        return res.status(404).json({ message: "Usuario no encontrado" });
-      }
-
-      res.redirect("/admin/users"); // Redirige a la lista de usuarios después de eliminar
-    } catch (error) {
-      logger.error(error);
-      res.status(500).send("Error interno del servidor");
+    if (!deletedUser) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
+
+    res.redirect("/admin/users"); // Redirige a la lista de usuarios después de eliminar
+  } catch (error) {
+    logger.error(error);
+    res.status(500).send("Error interno del servidor");
   }
+}
+
 
   // Controlador para obtener todos los usuarios
   async getAllUsers(req, res) {

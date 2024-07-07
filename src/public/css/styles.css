@@ -436,7 +436,7 @@ h3 {
   align-content: center;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin:5% 30%;
 }
 
 .container-checkout h1 {
@@ -484,114 +484,62 @@ h3 {
 }
 
 /*ESTILO DE VISTA DE DETALLES*/
-#addToCartForm {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: space-around;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 5px;
-}
 
 .product-details {
-  margin: 20px;
+  max-width: 600px;
+  margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #ff66b2; /* Color rosa */
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  header {
-    padding: 10px;
-  }
+.product-details img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #ff66b2; /* Color rosa */
+  border-radius: 10px;
+}
 
-  .logo img {
-    max-width: 80px;
-  }
+.product-details h1 {
+  font-size: 24px;
+  color: #ff66b2; /* Color rosa */
+}
 
-  nav ul li {
-    display: block;
-    text-align: center;
-  }
+.btnCart, .btnMio {
+  background-color: #ff66b2; /* Color rosa */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-top: 2px;
+  text-decoration: none;
+}
 
-  .profile-card {
-    max-width: 90%;
-    padding: 15px;
-  }
+.btnCart:hover, .btnMio:hover {
+  background-color: #e60073; /* Color rosa oscuro */
+}
 
-  .containerHome {
-    margin-top: 50px;
-  }
+.container-counter {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 20px;
+}
 
-  .imgHome {
-    max-width: 90%;
-    margin-left: 5%;
-  }
+.container-counter input {
+  width: 50px;
+  text-align: center;
+  margin: 0 10px;
+  border: 1px solid #ff66b2; /* Color rosa */
+  border-radius: 5px;
+}
 
-  .container-loginForm {
-    width: 80%;
-  }
-
-  .formRegister {
-    width: 90%;
-  }
-
-  .Products-Container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .containerCard {
-    width: 90%;
-  }
-
-  #containerProducts {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .card {
-    width: 90%;
-  }
-
-  .form-container {
-    width: 90%;
-  }
-
-  #chatBox {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  #messagesLogs {
-    margin-left: 0;
-  }
-
-  .container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .container-checkout {
-    max-width: 90%;
-  }
-
-  .group-btn {
-    flex-direction: column;
-  }
-
-  .group-btn button {
-    margin: 10px 0;
-  }
-
-  #addToCartForm {
-    flex-direction: column;
-    align-items: center;
-  }
+.btnDetail {
+  margin-top: 20px;
 }
 /*ADMIN*/
 

@@ -28,5 +28,7 @@ router.post('/admin/users/:_id/delete', userController.deleteUser);
 router.post('/:uid/documents', upload.fields([{ name: 'document' }, { name: 'products' }, { name: 'profile' }]), userController.uploadDocuments);
 // Ruta para obtener todos los usuarios
 router.get('/',userController.getAllUsers);
+router.delete('/api/user/admin/users/:_id', userController.deleteUser);
+router.post('/api/user/admin/users/:_id/edit', userController.editUser);
 
 module.exports= router

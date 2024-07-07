@@ -1,20 +1,23 @@
-  <h1>Admin Panel</h1>
+<h1>Admin Panel</h1>
     
-    <h2>User List</h2>
-    <ul class="cartUser">
-        {{#each usersJSON}}
-        <li>
-                Name: {{this.first_name}} {{this.last_name}} | <br>
-                Email: {{this.email}} | <br>
-                Role: {{this.role}}
-                <form action="api/user/admin/users/{{this._id}}/edit" method="POST" ></form>
-                    <button type="submit">Edit</button>
-                </form>
-                <form action="/api/user/admin/users/{{this._id}}/edit" method="POST">
-                    <button type="submit">Delete</button>
-                </form>
-            
-           </li>
-        {{/each}}
-    </ul>
-    
+<h2>User List</h2>
+<ul class="cartUser">
+    {{#each usersJSON}}
+    <li>
+        Name: {{this.first_name}} {{this.last_name}} | <br>
+        Email: {{this.email}} | <br>
+        Role: {{this.role}}
+        
+        <!-- Formulario de Edición -->
+        <form action="/api/user/admin/users/{{this._id}}/edit" method="POST">
+            <button type="submit">Edit</button>
+        </form>
+        
+        <!-- Formulario de Eliminación -->
+        <form action="/api/user/admin/users/{{this._id}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {{/each}}
+</ul>
