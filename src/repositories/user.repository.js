@@ -79,6 +79,14 @@ class UserRepository {
       console.log(error);
     }
   }
+  async deleteUserById(id) {
+    try {
+      const deletedUser = await UserModel.findByIdAndDelete(id);
+      return deletedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 

@@ -30,5 +30,5 @@ router.post('/:uid/documents', upload.fields([{ name: 'document' }, { name: 'pro
 router.get('/',userController.getAllUsers);
 router.delete('/api/user/admin/users/:_id', userController.deleteUser);
 router.post('/api/user/admin/users/:_id/edit', userController.editUser);
-
+router.delete('/admin/users/:_id', userController.deleteUser);
 module.exports= router
