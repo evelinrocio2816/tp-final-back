@@ -14,6 +14,7 @@ const emailManager = new EmailManager();
 const moment = require("moment");
 
 const UserRepository = require("../repositories/user.repository.js");
+const ViewsController = require("./views.controllers.js");
 const userRepository = new UserRepository();
 
 class UserController {
@@ -344,40 +345,37 @@ class UserController {
   }
 }
 
-
-  async deleteUser(req, res) {
-  const { _id } = req.params;
-
+async deleteUser(req, res) {
+  const { uid } = req.params;
   try {
-    const deletedUser = await userRepository.deleteUserById(_id);
-
-    if (!deletedUser) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-
-    res.redirect("/admin/users"); // Redirige a la lista de usuarios después de eliminar
-  } catch (error) {
-    logger.error(error);
-    res.status(500).send("Error interno del servidor");
+  
+  const user = await UserModel.findById(uid) 
+  if(user) {
+  await emailManager.sendEmail(user.email, user.first_name, "Eliminación de cuenta", "Tu cuenta ha sido eliminada porque no cumple con los términos y condiciones acordados.") 
+  await UserModel.findByIdAndDelete(uid); 
   }
-}
+  
+  ViewsController.renderAdmin(req, res);
+  } catch (error) {
+  logger.error(error);
+  res.status(500).send({message:"Error interno del servidor", error:error.message});
+  
+  }
+  
+  }
 
 
-  // Controlador para obtener todos los usuarios
+ 
   async getAllUsers(req, res) {
     try {
-      // Buscar todos los usuarios en la base de datos
       const users = await userRepository.getAllUsers(
         {},
         "first_name last_name email role"
       );
 
-      // Verificar si se encontraron usuarios
       if (!users || users.length === 0) {
         return res.status(404).json({ message: "No se encontraron usuarios." });
-      }
-
-      // Devolver la lista de usuarios con los campos especificados
+      }  
       res.status(200).json(users);
       console.log(users);
     } catch (error) {

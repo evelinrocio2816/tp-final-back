@@ -1,4 +1,5 @@
 const ProductModel = require("../models/products.models.js");
+const UserModel = require("../models/user.models.js");
 const CartRepository = require("../repositories/cart.repository.js");
 const UserRepository = require("../repositories/user.repository.js");
 const userRepository = new UserRepository()
@@ -196,16 +197,43 @@ async renderProductDetails(req, res) {
     }
 
 
-    async renderAdmin(req, res) {
-      try {
-        const users = await userRepository.getAllUsers(); // Obtener los usuarios desde el repositorio
-        const usersJSON = users.map(user => user.toJSON()) //Convertir los usuarios a JSON para evadir las restricciones impuestas por Handlebars de acceso a propiedades de usuario
-        res.render('admin', { usersJSON }); // Renderizar la vista 'admin' con los usuarios
-        console.log(users);
-      } catch (error) {
-        logger.error(error);
-        res.status(500).send('Error interno del servidor');
-      }
-}
+async renderAdmin(req, res) {
+  try {
+  const limit = parseInt(req.query.limit) || 10; 
+  const page = parseInt(req.query.page) || 1; 
+  const loggedInUserId = req.user._id; 
+  const role = req.user.role
+  const totalUsers = await UserModel.countDocuments({_id: {$ne: loggedInUserId}}); 
+  const skipCount = (page - 1) * limit; 
+  let criteria = [
+  { $match: { _id: {$ne: loggedInUserId}}}, 
+  { $skip: skipCount}, 
+  { $limit: limit} 
+  ]
+  
+  const users = await UserModel.aggregate(criteria);
+  const totalPages = Math.ceil(totalUsers / limit);
+  const hasNextPage = page < totalPages;
+  const hasPrevPage = page > 1;
+  res.render("admin", { 
+  users: users, 
+  totalPages, 
+  prevPage: hasPrevPage ? page - 1 : null, 
+  nextPage: hasNextPage ? page + 1 : null,
+  currentPage: page,
+  hasPrevPage,
+  hasNextPage,
+  limit: limit, 
+  role: role,
+  docs: users,
+
+  });
+  
+  } catch (error) {
+  logger.error(error);
+  res.status(500).send({message: "Error interno del servidor", error: error.message});
+  }
+  
+  }
 }
 module.exports = ViewsController;

@@ -54,23 +54,25 @@ class EmailManager {
             throw new Error("Error al enviar correo electrónico");
         }
     }
-    async sendEmail({ to }) {
+    async sendEmail(email, first_name, subject, message) {
+        try { 
         const mailOptions = {
-            from: "<Evelinr2816@gmail.com>",
-            to: to,
-            subject: "Eliminacion de la cuenta",
-            html: `<h1>Eliminacion</h1>
-                   <p> Hola</p>
-                   <p>Decidimos eliminar tu cuenta por registro de inactividad`
+        from: "< Evelinr2816@gmail.com >",
+        to: email,
+        subject: subject, 
+        html: `<h1> ${subject} </h1>
+        <p> Hola ${first_name} </p>
+        <p> ${message} </p>
+        
+        <p> Le enviamos un cordial saludo, que tenga un gran día</p>` 
         };
-    
-        try {
-          await this.transporter.sendMail(mailOptions);
-          logger.info(`Correo enviado a ${to}`);
+        await this.transporter.sendMail(mailOptions);
+        logger.info(`Correo enviado a ${email}`);
         } catch (error) {
-          logger.error('Error enviando correo:', error);
+        logger.error("Error enviando correo:", error);
         }
-      }
+        }
+        
       async sendProductDeletionEmail(email, first_name, productId) {
         const mailOptions = {
             from: "<evelinr2816@gmail.com>",

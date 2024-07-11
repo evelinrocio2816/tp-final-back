@@ -545,15 +545,15 @@ h3 {
 
 .cartUser {
   list-style-type: none;
-  display: inline-flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   margin-left: 10%;
   padding: 10px;
   max-width: 600px;
   gap: 1rem;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  align-items: stretch;
 }
 .cartUser li {
   background-color: #fff;
