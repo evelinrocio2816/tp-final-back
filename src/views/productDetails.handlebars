@@ -8,12 +8,12 @@
     <p>Price: ${{product.price}}</p>
     <p>Category: {{product.category}}</p>
     <form id="addToCartForm" action="/api/carts/{{cartId}}/product/{{product.id}}" method="POST">
-        <div class="container-counter"></div>
+        <div class="container-counter">
         <button class="btnCart" type="button" id="decrementButton">-</button>
-        <input class="btnCart" type="text" id="quantity" name="quantity" value="1" readonly>
+        <input class="btnCart" type="button" id="quantity" name="quantity" value="1" readonly>
         <button class="btnCart" type="button" id="incrementButton">+</button>
-        <div class="btnDetail">
-    </form>
+      </div> 
+    </form> <div class="btnDetail">
     <button class="btnMio" onclick="postProductToCart('{{cartId}}','{{product.id}}')">Agregar al Carrito</button>
 <a class="btnMio" href="/products"> Volver a Productos</a>    
 </div>
